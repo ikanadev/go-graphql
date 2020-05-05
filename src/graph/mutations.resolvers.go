@@ -5,22 +5,21 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/vkevv/go-graphql/src/graph/generated"
 	"github.com/vkevv/go-graphql/src/graph/model"
 )
 
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented"))
+	return r.Res.CreateTodo(ctx, input)
 }
 
 func (r *mutationResolver) Login(ctx context.Context, input model.LoginInput) (*model.AuthResponse, error) {
-	panic(fmt.Errorf("not implemented"))
+	return r.Res.Login(ctx, input)
 }
 
 func (r *mutationResolver) Register(ctx context.Context, input model.RegisterInput) (*model.AuthResponse, error) {
-	panic(fmt.Errorf("not implemented"))
+	return r.Res.Register(ctx, input)
 }
 
 // Mutation returns generated.MutationResolver implementation.

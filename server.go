@@ -11,16 +11,14 @@ import (
 	"github.com/vkevv/go-graphql/src/db"
 	"github.com/vkevv/go-graphql/src/graph"
 	"github.com/vkevv/go-graphql/src/graph/generated"
+	"github.com/vkevv/go-graphql/src/graph/model"
 	"github.com/vkevv/go-graphql/src/middleware"
 )
 
 // go run github.com/99designs/gqlgen generate
 
-const defaultPort = "8080"
-
-func graphQLHandler(DB *pg.DB) gin.HandlerFunc {
-	// define package to put inside resolver
-	config := generated.Config{Resolvers: &graph.Resolver{}}
+func graphQLHandler(DB *pg.DB, conf config.Config) gin.HandlerFunc {
+	config := generated.Config{Resolvers: graph.NewResolver(DB, conf)}
 	h := handler.NewDefaultServer(generated.NewExecutableSchema(config))
 
 	return func(c *gin.Context) {
@@ -48,9 +46,14 @@ func main() {
 	DB.AddQueryHook(db.Logger{})
 	defer DB.Close()
 
+	err := db.CreateTables(DB, &model.User{}, &model.Todo{})
+	if err != nil {
+		panic("Can't create tables")
+	}
+
 	router := gin.New()
 	router.Use(middleware.AuthMiddleware(conf))
-	router.POST("/query", graphQLHandler(DB))
+	router.POST("/query", graphQLHandler(DB, conf))
 	router.GET("/", playGroundHandler())
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", conf.App.Port)
 	router.Run(":" + conf.App.Port)

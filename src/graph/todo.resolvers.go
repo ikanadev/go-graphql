@@ -5,14 +5,13 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/vkevv/go-graphql/src/graph/generated"
 	"github.com/vkevv/go-graphql/src/graph/model"
 )
 
 func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, error) {
-	panic(fmt.Errorf("not implemented"))
+	return r.Res.UserTx.GetUserByID(obj.UserID)
 }
 
 // Todo returns generated.TodoResolver implementation.

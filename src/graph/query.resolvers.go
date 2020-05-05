@@ -5,18 +5,17 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/vkevv/go-graphql/src/graph/generated"
 	"github.com/vkevv/go-graphql/src/graph/model"
 )
 
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented"))
+	return r.Res.GetUserTodos(ctx)
 }
 
 func (r *queryResolver) AllTodos(ctx context.Context) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented"))
+	return r.Res.TodoTx.GetAll()
 }
 
 // Query returns generated.QueryResolver implementation.
