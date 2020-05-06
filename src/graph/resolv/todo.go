@@ -2,8 +2,8 @@ package resolv
 
 import (
 	"context"
+	"errors"
 
-	"github.com/pkg/errors"
 	"github.com/vkevv/go-graphql/src/graph/model"
 	"github.com/vkevv/go-graphql/src/middleware"
 )

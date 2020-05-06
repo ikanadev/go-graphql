@@ -48,7 +48,7 @@ func main() {
 
 	err := db.CreateTables(DB, &model.User{}, &model.Todo{})
 	if err != nil {
-		panic("Can't create tables")
+		panic("Can't create tables" + err.Error())
 	}
 
 	router := gin.New()

@@ -1,0 +1,44 @@
+version: '3.7'
+services:
+  database:
+    image: postgres:12.2
+    container_name: postgres_cont
+    environment: 
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
+    expose: 
+      - 5432
+    ports:
+      - ${DB_PORT}:5432
+    networks:
+      - app_net
+  api_prod:
+    container_name: api_prod_cont
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    depends_on: 
+      - database
+    networks:
+      - app_net
+    ports: 
+      - ${PORT}:8080
+  api_dev:
+    container_name: api_dev_cont
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    depends_on: 
+      - database
+    networks: 
+      - app_net
+    ports: 
+      - ${PORT}:8080
+    volumes:
+      - ./src:/app/src
+networks:
+  app_net:
+    driver: bridge

@@ -31,7 +31,7 @@ func New(opts *pg.Options) *pg.DB {
 // CreateTables create tables based on interfaces
 func CreateTables(db *pg.DB, structs ...interface{}) error {
 	for _, model := range structs {
-		err := db.CreateTable(&model, &orm.CreateTableOptions{
+		err := db.CreateTable(model, &orm.CreateTableOptions{
 			FKConstraints: true,
 			IfNotExists:   true,
 		})

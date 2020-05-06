@@ -4,7 +4,7 @@ import "golang.org/x/crypto/bcrypt"
 
 // User Represents user in db
 type User struct {
-	ID       string `json:"id"`
+	ID       string `json:"id" pg:",pk,type:bigserial"`
 	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`

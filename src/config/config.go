@@ -41,7 +41,7 @@ func GetConfig() Config {
 			Host:     getEnv("DB_HOST", "localhost"),
 			Port:     getEnv("DB_PORT", "5432"),
 		},
-		Gin: gin{Mode: "debug"},
+		Gin: gin{Mode: getEnv("GIN_MODE", "debug")},
 		App: app{
 			JWT:  getEnv("JWT_KEY", ""),
 			Port: getEnv("PORT", "8080"),

@@ -29,7 +29,7 @@ func NewRes(DB *pg.DB, conf config.Config) *Res {
 // GenToken generates a token basen on UserID
 func (r *Res) GenToken(ID string) (*model.AuthToken, error) {
 	type authClaims struct {
-		UserID string `json:"userId"`
+		UserID string `json:"userID"`
 		jwt.StandardClaims
 	}
 	expiredAt := time.Now().Add(time.Hour * 1)
